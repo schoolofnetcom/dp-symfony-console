@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 
 class PokeApi extends Command
 {
@@ -17,6 +18,8 @@ class PokeApi extends Command
         $this->addArgument('name', InputArgument::REQUIRED, 'O nome ou ID do Pokemon');
         $this->addArgument('attribute', InputArgument::OPTIONAL, 'Retorna um atributo específico');
         $this->addArgument('attributes', InputArgument::IS_ARRAY | InputArgument::OPTIONAL, 'Retorna vários atributos');
+
+        $this->addOption('abilities', 'a', InputOption::VALUE_NONE, 'Retorna as habilidade do monstrinho');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -64,6 +67,8 @@ class PokeApi extends Command
             }
             $toOutput = array_merge($toOutput, $abilitiesToOutput);
         }
+
+        $output->writeln($toOutput);
 
         $output->write('Finalizamos o ');
         $output->write('processo');
